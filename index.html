@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>竹内 賀一 - リンクまとめ</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 20%, #0d1a3a 0%, #070710 50%, #10061e 100%);
+      font-family: 'Noto Sans JP', sans-serif;
+      padding: 36px 16px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 390px) {
+      body { padding: 24px 12px 48px; }
+    }
+
+    /* AI背景キャンバス */
+    #neural-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* コンテンツはキャンバスの上に */
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 金線装飾 */
+    .deco-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, transparent, #c9a84c);
+      margin: 0 auto 24px;
+    }
+
+    .header { text-align: center; margin-bottom: 40px; }
+
+    .header-profile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .header-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 8px;
+      object-fit: cover;
+      object-position: top center;
+      flex-shrink: 0;
+    }
+
+    .header-text { text-align: left; }
+
+    .name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      color: #c9a84c;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .name-ja {
+      font-size: clamp(22px, 6vw, 26px);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: 0.1em;
+    }
+
+    .title {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .deco-line-bottom {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, #c9a84c, transparent);
+      margin: 24px auto 0;
+    }
+
+    /* セクション */
+    .section {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto 28px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: #c9a84c;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, rgba(201,168,76,0.5), transparent);
+    }
+
+    .links { display: flex; flex-direction: column; gap: 6px; }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      min-height: 52px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      color: #fff;
+      transition: opacity 0.2s, transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      /* ガラス感 */
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .link-btn:hover { opacity: 0.85; transform: translateX(4px); }
+    .link-btn .arrow { font-size: 13px; opacity: 0.6; }
+
+    .btn-agasa    { background: linear-gradient(135deg, rgba(26,40,68,0.85), rgba(45,95,160,0.85)); }
+    .btn-emagen   { background: linear-gradient(135deg, rgba(139,0,0,0.85), rgba(232,25,78,0.85)); }
+    .btn-welhire  { background: linear-gradient(135deg, rgba(13,74,64,0.85), rgba(29,184,122,0.85)); }
+    .btn-airport  { background: linear-gradient(135deg, rgba(10,42,80,0.85), rgba(21,101,192,0.85)); }
+    .btn-rental   { background: linear-gradient(135deg, rgba(45,10,80,0.85), rgba(123,31,162,0.85)); }
+    .btn-minkaan  { background: linear-gradient(135deg, rgba(74,10,80,0.85), rgba(194,24,91,0.85)); }
+    .btn-nurse    { background: linear-gradient(135deg, rgba(10,30,60,0.85), rgba(21,101,192,0.85)); }
+    .btn-youtube  { background: linear-gradient(135deg, rgba(127,0,0,0.85), rgba(211,47,47,0.85)); }
+    .btn-instagram { background: linear-gradient(135deg, rgba(240,148,51,0.85), rgba(220,39,67,0.85), rgba(188,24,136,0.85)); }
+    .btn-x        { background: linear-gradient(135deg, rgba(17,17,17,0.85), rgba(51,51,51,0.85)); }
+
+    .footer {
+      text-align: center;
+      margin-top: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.4em;
+      color: rgba(201,168,76,0.3);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AI背景 -->
+  <canvas id="neural-bg"></canvas>
+
+  <div class="content">
+
+    <div class="deco-line"></div>
+
+    <div class="header">
+      <div class="header-profile">
+        <img class="header-photo" src="photo.png.jpg" alt="竹内 賀一">
+        <div class="header-text">
+          <div class="name-en">TAKEUCHI KAICHI</div>
+          <div class="name-ja">竹内 賀一</div>
+          <div class="title">代表取締役 · President</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deco-line-bottom"></div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Agasa Global Foundation</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="links">
+        <a class="link-btn btn-agasa" href="https://www.kyukyuhanso.com/" target="_blank">
+          <span>AGASA 救急サービス</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-emagen" href="https://emagen119.com/" target="_blank">
+          <span>民間の救急車 エマジェン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-welhire" href="https://www.welhire.com/" target="_blank">
+          <span>訪日外国人旅行 WelHire</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-airport" href="https://www.airport-wheelchair-hire.com/" target="_blank">
+          <span>車いす専用空港送迎</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-rental" href="https://www.minkan-no-kyukyusha.com/" target="_blank">
+          <span>車いすレンタル</span><span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">メタスピリッツ</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="links">
+        <a class="link-btn btn-minkaan" href="https://www.minkaan.com/" target="_blank">
+          <span>民間の看護師 ミンカーン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-nurse" href="https://www.emagen-kaigyou-siryou.com/" target="_blank">
+          <span>ナース外交員</span><span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">SNS</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="links">
+        <a class="link-btn btn-youtube" href="https://www.youtube.com/@emagen119/" target="_blank">
+          <span>YouTube｜エマジェン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-instagram" href="https://www.instagram.com/emagen119.official/" target="_blank">
+          <span>Instagram｜エマジェン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-x" href="https://x.com/emagen119" target="_blank">
+          <span>X｜エマジェン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-instagram" href="https://www.instagram.com/agasa_emergencyservice_jp/" target="_blank">
+          <span>Instagram｜Welhire</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-instagram" href="https://www.instagram.com/minkan.no.kangoshi.minkaan/" target="_blank">
+          <span>Instagram｜ミンカーン</span><span class="arrow">→</span>
+        </a>
+        <a class="link-btn btn-x" href="https://x.com/kangoshiminkaan" target="_blank">
+          <span>X｜ミンカーン</span><span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">AGASA GROUP</div>
+
+  </div><!-- /content -->
+
+  <script>
+    const canvas = document.getElementById('neural-bg');
+    const ctx = canvas.getContext('2d');
+
+    let W, H, nodes, animId;
+
+    const NODE_COUNT = 60;
+    const CONNECTION_DIST = 160;
+    const COLORS = {
+      node:   ['#4da8ff', '#a78bfa', '#c9a84c', '#67e8f9'],
+      line:   'rgba(77,168,255,',
+      glow:   '#4da8ff',
+    };
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function createNodes() {
+      nodes = Array.from({ length: NODE_COUNT }, () => ({
+        x:   Math.random() * W,
+        y:   Math.random() * H,
+        vx:  (Math.random() - 0.5) * 0.4,
+        vy:  (Math.random() - 0.5) * 0.4,
+        r:   Math.random() * 2.5 + 1,
+        color: COLORS.node[Math.floor(Math.random() * COLORS.node.length)],
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.02 + 0.01,
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      /* 背景グラデーション */
+      const bg = ctx.createRadialGradient(W * 0.3, H * 0.2, 0, W * 0.5, H * 0.5, Math.max(W, H));
+      bg.addColorStop(0,   '#0d1a3a');
+      bg.addColorStop(0.5, '#070710');
+      bg.addColorStop(1,   '#10061e');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      /* ノードを動かす */
+      nodes.forEach(n => {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+        n.pulse += n.pulseSpeed;
+      });
+
+      /* 接続線を描画 */
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECTION_DIST) {
+            const alpha = (1 - dist / CONNECTION_DIST) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = COLORS.line + alpha + ')';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      /* ノードを描画 */
+      nodes.forEach(n => {
+        const pulse = Math.sin(n.pulse) * 0.5 + 1;
+
+        /* 外側の光彩 */
+        const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 8 * pulse);
+        grd.addColorStop(0, n.color + 'cc');
+        grd.addColorStop(1, n.color + '00');
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 8 * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        /* コア */
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = n.color;
+        ctx.shadowColor = n.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      /* 中央の大きな光彩 */
+      const center = ctx.createRadialGradient(W/2, H*0.25, 0, W/2, H*0.25, W * 0.5);
+      center.addColorStop(0,   'rgba(77,168,255,0.06)');
+      center.addColorStop(0.5, 'rgba(167,139,250,0.03)');
+      center.addColorStop(1,   'transparent');
+      ctx.fillStyle = center;
+      ctx.fillRect(0, 0, W, H);
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(animId);
+      resize();
+      createNodes();
+      draw();
+    });
+
+    resize();
+    createNodes();
+    draw();
+  </script>
+
+</body>
+</html>
